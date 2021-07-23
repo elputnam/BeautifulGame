@@ -47,7 +47,7 @@ function draw() {
 function drawTrack(steps, rad, v) {
   //beginShape(TRIANGLE_STRIP);
   beginShape(TRIANGLE_STRIP);
-  fill(0, 50)
+  fill(10)
   stroke(255)
   //noFill();
   //fill(150, 70, 50, 50)
