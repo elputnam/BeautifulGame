@@ -3,7 +3,8 @@ let v;
 let turn = 0;
 let num;
 let swarm = [];
-let twists = 1;
+let twists = 1.5;
+var capturer;
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
@@ -16,32 +17,43 @@ function setup() {
   for (let i = 0; i < num; i++) {
     swarm.push(new Bug());
   }
+  capturer = new CCapture( { format: 'gif', workersPath: 'js/' } );
 }
 
 function draw() {
-  //background(random(50), 20, 100);
+  background(10);
   lights();
+  print(mouseX, mouseY);
   for(let i=0; i < swarm.length; i++){
     swarm[i].run();
   }
   push();
   rotateY(turn);
-  rotateY(map(mouseX, 0, width, -1, 1));
+  // rotateY(map(mouseX, 0, width, -1, 1));
   rotateX(turn);
-  rotateX(map(mouseY, 0, width, -1, 1));
+  // rotateX(map(mouseY, 0, width, -1, 1));
   rotateZ(turn);
   //noStroke();
   drawTrack(random(90,100), rad, v);
   //drawEdges(height*0.15, rad, v);
   turn += 0.005;
   pop();
-  v = map(mouseX, 0, width, height*.03, height/2);
-  rad = map(mouseY, 0, height, height*.03, height/2);
-  let toggle = int(random(0,2));
-  if (toggle == 1) twists += 0.5;
-  if (toggle == 2) twists -= 0.5;
-  if(frameRate%15==0) toggle;
-  if (twists == 2) twists = 0.5;
+  // v = map(mouseX, 0, width, height*.03, height/2);
+  // rad = map(mouseY, 0, height, height*.03, height/2);
+  v = height*.1;
+  rad = height*.25;
+  // let toggle = int(random(0,2));
+  // if (toggle == 1) twists += 0.5;
+  // if (toggle == 2) twists -= 0.5;
+  // if(frameRate%15==0) toggle;
+  // if (twists == 2) twists = 0.5;
+  
+}
+
+function gif(){
+	requestAnimationFrame(canvas);
+	// rendering stuff ...
+	capturer.capture(canvas);
 }
 
 function drawTrack(steps, rad, v) {
@@ -123,4 +135,13 @@ class Bug{
     pop();
   }
 }
-  
+
+function keyReleased() {
+  if (key == 's' || key == 'S') {
+    gif();
+    capturer.start();
+  }
+  if (key == 'e' || key == 'E'){
+    capturer.save();
+  }
+}
