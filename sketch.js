@@ -19,29 +19,22 @@ function setup() {
 }
 
 function draw() {
-  //background(random(50), 20, 100);
+  background(10);
   lights();
   for(let i=0; i < swarm.length; i++){
     swarm[i].run();
   }
   push();
   rotateY(turn);
-  rotateY(map(mouseX, 0, width, -1, 1));
   rotateX(turn);
-  rotateX(map(mouseY, 0, width, -1, 1));
   rotateZ(turn);
   //noStroke();
   drawTrack(random(90,100), rad, v);
   //drawEdges(height*0.15, rad, v);
   turn += 0.005;
   pop();
-  v = map(mouseX, 0, width, height*.03, height/2);
-  rad = map(mouseY, 0, height, height*.03, height/2);
-  let toggle = int(random(0,2));
-  if (toggle == 1) twists += 0.5;
-  if (toggle == 2) twists -= 0.5;
-  if(frameRate%15==0) toggle;
-  if (twists == 2) twists = 0.5;
+  v = height*.1;
+  rad = height*.4;
 }
 
 function drawTrack(steps, rad, v) {
