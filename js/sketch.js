@@ -3,7 +3,7 @@ let v;
 let turn = 0;
 let num;
 let swarm = [];
-let twists = 1;
+let twists = 1.5;
 
 var capture = false; // default is to not capture frames, can be changed with button in browser
 var capturer = new CCapture({
@@ -47,10 +47,10 @@ function draw() {
   rotateZ(-turn);
   //noStroke();
   drawTrack(random(90,100), rad, v);
-  //drawEdges(height*0.15, rad, v);
+  drawEdges(height, rad, v);
   turn += 0.005;
   pop();
-  v = height*.15;
+  v = height*.1;
   rad = height*.35;
 
   //capture details
@@ -66,8 +66,9 @@ function draw() {
 
 function drawTrack(steps, rad, v) {
   beginShape(TRIANGLE_STRIP);
-  fill(100)
-  stroke(10)
+  fill(30)
+  // noStroke();
+  stroke(70)
   for (let step = 0; step < (steps + 1); step += 1) {
     let u = step * TAU / steps;
     let x = (rad - v * cos(twists * u)) * cos(u);
@@ -84,23 +85,23 @@ function drawTrack(steps, rad, v) {
 
 function drawEdges(steps, rad, v) {
   for (let step = 0; step < (steps + 1); step += 1) {
-    stroke(0);
-    fill(random(260, 300), random(100), random(100));
+    noStroke(0);
+    // stroke(0);
+    fill(0);
     let u = step * TAU / steps;
     let x = (rad - v * cos(twists * u)) * cos(u);
     let y = (rad - v * cos(twists * u)) * sin(u);
     let z = -v * sin(twists * u);
     push();
     translate(x, y, z);
-    //box(10)c
-    box(random(6,10))
+    box(5)
     pop();
     x = (rad + v * cos(twists * u)) * cos(u);
     y = (rad + v * cos(twists * u)) * sin(u);
     z = v * sin(twists * u);
     push();
     translate(x, y, z);
-    box(random(6,10))
+    box(5)
     //box(10);
     pop();
   }
