@@ -3,7 +3,9 @@ let v;
 let turn = 0;
 let num;
 let swarm = [];
-let twists = 1.5;
+let twists = 1;
+
+let mobius = 'Mobius Artists Group'
 
 var capture = false; // default is to not capture frames, can be changed with button in browser
 var capturer = new CCapture({
@@ -13,7 +15,12 @@ var capturer = new CCapture({
 });
 
 const T = 1;
-const NUM_FRAMES = 500;
+const NUM_FRAMES = 640;
+
+let myFont;
+function preload() {
+  myFont = loadFont('assets/Montserrat-SemiBold.ttf');
+}
 
 function setup() {
   createCanvas(500, 500, WEBGL);
@@ -22,7 +29,8 @@ function setup() {
   // v = height*.05;
   num = height*.5;
   frameRate(15);
-  background(10)
+  background(10);
+  textFont(myFont);
   for (let i = 0; i < num; i++) {
     swarm.push(new Bug());
   }
@@ -33,12 +41,24 @@ function draw() {
 
   background(10);
   lights();
-  print(mouseX, mouseY);
-  
+  print(frameCount);
+
   //bugs
   for(let i=0; i < swarm.length; i++){
     swarm[i].run();
   }
+
+  //Text
+  push();
+  rotateY(turn);
+  rotateX(turn);
+  translate(0, 0, 75);
+  fill(0);
+  rect(-80, -80, 150, 155);
+  fill(255);
+  textSize(30);
+  text(mobius, -60, -60, 125, 500);
+  pop();
 
   //strip
   push();
@@ -47,11 +67,13 @@ function draw() {
   rotateZ(-turn);
   //noStroke();
   drawTrack(random(90,100), rad, v);
-  drawEdges(height, rad, v);
+  //drawEdges(height, rad, v);
   turn += 0.005;
   pop();
-  v = height*.1;
+  v = height*.06;
   rad = height*.35;
+
+
 
   //capture details
   if (capture){
@@ -66,9 +88,9 @@ function draw() {
 
 function drawTrack(steps, rad, v) {
   beginShape(TRIANGLE_STRIP);
-  fill(30)
+  fill(5)
   // noStroke();
-  stroke(70)
+  stroke(100)
   for (let step = 0; step < (steps + 1); step += 1) {
     let u = step * TAU / steps;
     let x = (rad - v * cos(twists * u)) * cos(u);
@@ -87,7 +109,7 @@ function drawEdges(steps, rad, v) {
   for (let step = 0; step < (steps + 1); step += 1) {
     noStroke(0);
     // stroke(0);
-    fill(0);
+    fill(100);
     let u = step * TAU / steps;
     let x = (rad - v * cos(twists * u)) * cos(u);
     let y = (rad - v * cos(twists * u)) * sin(u);
