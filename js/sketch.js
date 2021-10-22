@@ -5,7 +5,7 @@ let num;
 let swarm = [];
 let twists = 1;
 
-let mobius = 'Mobius Artists Group'
+// let mobius = 'Mobius Artists Group'
 
 var capture = false; // default is to not capture frames, can be changed with button in browser
 var capturer = new CCapture({
@@ -39,7 +39,7 @@ function setup() {
 function draw() {
   if (capture && frameCount==1) capturer.start(); // start the animation capture
 
-  background(10);
+  // background(10);
   lights();
   print(frameCount);
 
@@ -48,17 +48,17 @@ function draw() {
     swarm[i].run();
   }
 
-  //Text
-  push();
-  rotateY(turn);
-  rotateX(turn);
-  translate(0, 0, 75);
-  fill(0);
-  rect(-80, -80, 150, 155);
-  fill(255);
-  textSize(30);
-  text(mobius, -60, -60, 125, 500);
-  pop();
+  // //Text
+  // push();
+  // rotateY(turn);
+  // rotateX(turn);
+  // translate(0, 0, 75);
+  // fill(0);
+  // rect(-80, -80, 150, 155);
+  // fill(255);
+  // textSize(30);
+  // text(mobius, -60, -60, 125, 500);
+  // pop();
 
   //strip
   push();
@@ -70,9 +70,15 @@ function draw() {
   //drawEdges(height, rad, v);
   turn += 0.005;
   pop();
-  v = height*.06;
-  rad = height*.35;
-
+  // v = height*.06;
+  // rad = height*.35;
+  v = map(mouseX, 0, width, height*.03, height/2);
+ rad = map(mouseY, 0, height, height*.03, height/2);
+ let toggle = int(random(0,2));
+ if (toggle == 1) twists += 0.5;
+ if (toggle == 2) twists -= 0.5;
+ if(frameRate%15==0) toggle;
+ if (twists == 2) twists = 0.5;
 
 
   //capture details
