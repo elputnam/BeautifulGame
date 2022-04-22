@@ -123,4 +123,8 @@ class Bug{
     pop();
   }
 }
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
   
